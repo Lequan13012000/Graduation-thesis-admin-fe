@@ -2,17 +2,7 @@
     <div class="form-container">
         <div class="form-content">
             <div class="form-header">
-                <div class="form-title">{{titleHeader}}</div>
-                <div class="form-action">
-                    <div class="form-action-icon" v-if="!isAdd">
-                        <i class="fas fa-plus" :class="{active: statusData==0}" @click="statusAdd"></i>
-                        <i class="fas fa-edit" :class="{active: statusData==1}" @click="statusEdit"></i>
-                        <i class="fas fa-eye" :class="{active: statusData==2}" @click="statusDetail"></i>
-                    </div>
-                    <div class="form-close">
-                        <i class="fas fa-times" @click="$emit('close')"></i>
-                    </div>
-                </div>
+                <div class="form-title">{{ titleHeader }}</div>
             </div>
 
             <div class="form-body">
@@ -34,9 +24,10 @@
             </div>
 
             <div class="form-footer">
-                <button class="button button-secondary" @click="$emit('close')">Đóng</button>
-                <button class="button" v-if="this.statusData == 0" @click="addItem()">Thêm mới</button>
-                <button class="button" v-if="this.statusData == 1" @click="updateItem()">Cập nhật</button>
+                <button class="button bg-[#FFFFFF] text-[#777E89] border-solid border-[#777E89]"
+                    @click="$emit('close')">Đóng</button>
+                <button class="button bg-[#F15B2B]" v-if="this.statusData == 0" @click="addItem()">Lưu</button>
+                <button class="button bg-[#39CB7F]" v-if="this.statusData == 1" @click="updateItem()">Cập nhật</button>
             </div>
         </div>
         <ErrorPopup :title="message" @close="close" v-if="hasError"></ErrorPopup>
@@ -46,114 +37,114 @@
 import api from '@/js/api'
 import ErrorPopup from '@/components/Bases/BasePopup/ErrorPopup'
 export default {
-    props:["title","status","item"],
-    components:{ErrorPopup},
+    props: ["title", "status", "item"],
+    components: { ErrorPopup },
     data() {
         return {
-            isAdd:true,
-            editorConfig:{},
+            isAdd: true,
+            editorConfig: {},
             isDetail: false,
-            data:this.item,
-            statusData:this.status,
-            category:{
-                id:0,
-                name:"",
-                description:""
+            data: this.item,
+            statusData: this.status,
+            category: {
+                id: 0,
+                name: "",
+                description: ""
             },
-            message:"",
+            message: "",
             hasError: false
         }
     },
-    created(){
-        if(this.status == 1){
+    created() {
+        if (this.status == 1) {
             this.isAdd = true
         }
-        if(this.status == 1){
+        if (this.status == 1) {
             this.isAdd = false
             this.category = this.data;
         }
-        if(this.status == 2){
+        if (this.status == 2) {
             this.isAdd = false
             this.category = this.data;
-            this.isDetail =true
+            this.isDetail = true
         }
     },
-    computed:{
-        titleHeader(){
-            if(this.statusData ==0){
+    computed: {
+        titleHeader() {
+            if (this.statusData == 0) {
                 return "Thêm " + this.title
             }
-            if(this.statusData ==1){
+            if (this.statusData == 1) {
                 return "Sửa " + this.title
             }
-            if(this.statusData ==2){
+            if (this.statusData == 2) {
                 return "Xem chi tiết " + this.title
             }
             return ""
         },
 
     },
-    methods:{
-        getNewItem(){
+    methods: {
+        getNewItem() {
             return {
-                id:0,
-                name:"",
-                description:""
+                id: 0,
+                name: "",
+                description: ""
             }
         },
-        statusAdd(){
+        statusAdd() {
             this.category = this.getNewItem();
             this.isDetail = false;
-            this.statusData=0;
+            this.statusData = 0;
         },
-        statusEdit(){
+        statusEdit() {
             this.category = this.data;
             this.isDetail = false;
-            this.statusData=1;
+            this.statusData = 1;
         },
-        statusDetail(){
+        statusDetail() {
             this.category = this.data;
             this.isDetail = true;
-            this.statusData=2;
+            this.statusData = 2;
         },
-        addItem(){
-            if(!this.category.name){
-                this.message= "Tên danh mục không được để trống."
+        addItem() {
+            if (!this.category.name) {
+                this.message = "Tên danh mục không được để trống."
                 this.hasError = true
                 return
             }
-            this.$axios.post(api.CategoryApi,this.category).then(() => {
+            this.$axios.post(api.CategoryApi, this.category).then(() => {
                 this.$emit("close");
                 this.$emit("success");
             })
-            .catch(()=>{
-                this.message = "Có lỗi xảy ra, vui lòng kiểm tra lại.";
-                this.hasError= true;
-            })
+                .catch(() => {
+                    this.message = "Có lỗi xảy ra, vui lòng kiểm tra lại.";
+                    this.hasError = true;
+                })
         },
-        updateItem(){
-            if(!this.category.name){
-                this.message= "Tên danh mục không được để trống."
+        updateItem() {
+            if (!this.category.name) {
+                this.message = "Tên danh mục không được để trống."
                 this.hasError = true
                 return
             }
-            this.$axios.put(`${api.CategoryApi}/${this.category.id}`,this.category).then(() => {
+            this.$axios.put(`${api.CategoryApi}/${this.category.id}`, this.category).then(() => {
                 this.$emit("close");
                 this.$emit("success");
             })
-            .catch(()=>{
-                this.message = "Có lỗi xảy ra, vui lòng kiểm tra lại.";
-                this.hasError= true;
-            })
+                .catch(() => {
+                    this.message = "Có lỗi xảy ra, vui lòng kiểm tra lại.";
+                    this.hasError = true;
+                })
         },
-        close(){
+        close() {
             this.hasError = false;
         }
     }
 }
 </script>
 <style scoped>
-.form-container{
+.form-container {
     position: fixed;
     inset: 0;
     background-color: rgba(0, 0, 0, 0.3);
@@ -161,72 +152,90 @@ export default {
     justify-content: center;
     align-items: center;
 }
-.form-content{
+
+.form-content {
     background: #fff;
     border-radius: 8px;
-    min-width: 800px;
-    max-width: 60%;
-    width: 60%;
+    min-width: 600px;
     max-height: 600px;
     overflow: auto;
 }
-.form-header{
+
+.form-header {
     height: 40px;
     display: flex;
-    justify-content: space-between;
-    padding: 0 12px;
+    justify-content: center;
+    padding: 32px 0;
     align-items: center;
-    background: #eee;
-    border-radius: 8px 8px 0 0;
 }
-.form-title{
-    font-size: 24px;
+
+.form-title {
+    font-style: normal;
     font-weight: 600;
+    font-size: 21px;
+    line-height: 27px;
+    color: #11142D;
 }
-.form-action{
+
+.form-action {
     display: flex;
     gap: 12px;
 }
-.form-action-icon{
+
+.form-action-icon {
     display: flex;
     gap: 12px;
 }
-i{
+
+i {
     height: 36px;
     width: 36px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-i:hover{
+
+i:hover {
     cursor: pointer;
     background: #fff;
 }
-.active{
+
+.active {
     background: #fff;
 }
-.form-body{
+
+.form-body {
     margin: 6px 0;
+    padding: 0 16px;
 }
-.form-body-item{
+
+.form-body-item {
     padding: 6px 12px;
 }
-.label{
-    font-size: 20px;
-    font-weight: 600;
+
+.label {
     padding: 6px 0;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 18px;
+    color: #11142D;
 }
-.form-body-item .input{
+
+.form-body-item .input {
     width: 100%;
 }
-.form-footer{
+
+.form-footer {
     width: 100%;
-    padding: 12px;
+    padding-bottom: 24px;
+    padding-top: 12px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     justify-items: center;
     gap: 12px;
 }
+
 ::-webkit-scrollbar {
     appearance: none;
     width: 10px;

@@ -1,19 +1,25 @@
 <template>
     <div class="content">
         <Header></Header>
-        <router-view></router-view>
+        <router-view class="base-view"></router-view>
     </div>
 </template>
 <script>
 import Header from './Header'
 export default {
-    components:{
+    components: {
         Header,
     }
 }
 </script>
 <style scoped>
-.content{
+.content {
     width: 100%;
+    margin-left: 256px;
+}
+
+.base-view {
+    overflow: scroll;
+    height: 100vh;
 }
 </style>

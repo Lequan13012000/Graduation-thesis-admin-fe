@@ -3,176 +3,102 @@
     <div class="form-content">
       <div class="form-header">
         <div class="form-title">{{ titleHeader }}</div>
-        <div class="form-action">
-          <div class="form-action-icon" v-if="!isAdd">
-            <i
-              class="fas fa-plus"
-              :class="{ active: statusData == 0 }"
-              @click="statusAdd"
-            ></i>
-            <i
-              class="fas fa-edit"
-              :class="{ active: statusData == 1 }"
-              @click="statusEdit"
-            ></i>
-            <i
-              class="fas fa-eye"
-              :class="{ active: statusData == 2 }"
-              @click="statusDetail"
-            ></i>
-          </div>
-          <div class="form-close">
-            <i class="fas fa-times" @click="$emit('close')"></i>
-          </div>
-        </div>
       </div>
-
       <div class="form-body">
         <div class="form-body-item">
-          <div class="label">
-            Tên sản phẩm<span style="color: red"> * </span>:
+          <div class="w-1/2">
+            <div class="label">
+              Tên sản phẩm<span style="color: red"> * </span>:
+            </div>
+            <div class="value">
+              <input type="text" class="input" v-model="product.name" :disabled="isDetail" required />
+            </div>
           </div>
-          <div class="value">
-            <input
-              type="text"
-              class="input"
-              v-model="product.name"
-              :disabled="isDetail"
-              required
-            />
-          </div>
-        </div>
-        <div class="form-body-item">
-          <div class="label">Danh mục<span style="color: red"> * </span>:</div>
-          <div class="value">
-            <md-field>
-              <label>Danh mục</label>
-              <md-select v-model="product.cat_id">
-                <md-option
-                  :value="category.id"
-                  v-for="(category, index) in categories"
-                  :key="index + category.id"
-                >
-                  {{ category.name }}
-                </md-option>
-              </md-select>
-            </md-field>
+          <div class="w-1/2">
+            <div class="label">Danh mục<span style="color: red"> * </span>:</div>
+            <div class="value">
+              <md-field>
+                <md-select v-model="product.cat_id">
+                  <md-option :value="category.id" v-for="(category, index) in categories" :key="index + category.id">
+                    {{ category.name }}
+                  </md-option>
+                </md-select>
+              </md-field>
+            </div>
           </div>
         </div>
         <div class="form-body-item">
-          <div class="label">Xuất xứ:</div>
-          <div class="value">
-            <input
-              type="text"
-              class="input"
-              v-model="product.origin"
-              :disabled="isDetail"
-            />
+          <div class="w-1/2">
+            <div class="label">Xuất xứ:</div>
+            <div class="value">
+              <input type="text" class="input" v-model="product.origin" :disabled="isDetail" />
+            </div>
+          </div>
+          <div class="w-1/2">
+            <div class="label">Giá bán<span style="color: red"> * </span>:</div>
+            <div class="value">
+              <input type="text" class="input" v-model="product.price" :disabled="isDetail" required />
+            </div>
           </div>
         </div>
         <div class="form-body-item">
-          <div class="label">Giá bán<span style="color: red"> * </span>:</div>
-          <div class="value">
-            <input
-              type="text"
-              class="input"
-              v-model="product.price"
-              :disabled="isDetail"
-              required
-            />
+          <div class="w-1/2">
+            <div class="label">
+              Số lượng còn<span style="color: red"> * </span>:
+            </div>
+            <div class="value">
+              <input type="number" class="input" v-model="product.amount" :disabled="isDetail" required />
+            </div>
+          </div>
+          <div class="w-1/2">
+            <div class="label">
+              Đơn vị tính<span style="color: red"> * </span>:
+            </div>
+            <div class="value">
+              <input type="text" class="input" v-model="product.unit" :disabled="isDetail" required />
+            </div>
           </div>
         </div>
-        <div class="form-body-item">
-          <div class="label">
-            Số lượng còn<span style="color: red"> * </span>:
-          </div>
-          <div class="value">
-            <input
-              type="number"
-              class="input"
-              v-model="product.amount"
-              :disabled="isDetail"
-              required
-            />
-          </div>
-        </div>
-        <div class="form-body-item">
-          <div class="label">
-            Đơn vị tính<span style="color: red"> * </span>:
-          </div>
-          <div class="value">
-            <input
-              type="text"
-              class="input"
-              v-model="product.unit"
-              :disabled="isDetail"
-              required
-            />
-          </div>
-        </div>
-        <div class="form-body-item">
+        <div class="px-[12px]">
           <div class="label">Ảnh mô tả:</div>
-          <div
-            style="display: flex; align-items: center; gap: 12px"
-            v-if="!isDetail"
-          >
-            <md-field class="p-0">
-              <label>Tải file lên</label>
-              <md-file @md-change="upLoadFile($event)" accept="image/*" />
-            </md-field>
-            <div class="image-container" v-if="product.image">
+          <div style="display: flex; align-items: center; gap: 12px" v-if="!isDetail">
+            <div class="image-container relative" v-if="product.image">
               <img :src="product.image" alt="" class="image-product" />
+              <img @click="removeImage" class="cursor-pointer absolute top-1 right-1" src="../../assets/icons/close.svg"
+                alt="">
+            </div>
+            <img class="w-[120px] h-[120px] cursor-pointer" @click="clickUploadFile($event)"
+              src="../../assets/icons/upload.svg" alt="">
+            <div class="p-0 hidden">
+              <input type="file" ref="upload" @change="upLoadFile($event)" accept="image/*" />
             </div>
           </div>
           <div v-else>
             <div class="image-container-detail" v-if="product.image">
               <img :src="product.image" alt="" class="image-product" />
             </div>
-            <div
-              v-else
-              style="display: flex; justify-content: center; color: red"
-            >
+            <div v-else style="display: flex; justify-content: center; color: red">
               Không có ảnh mô tả
             </div>
           </div>
         </div>
-        <div class="form-body-item">
+        <div class="px-[12px]">
           <div class="label">Mô tả:</div>
           <div class="value" v-if="!isDetail">
-            <ckeditor
-              tag-name="textarea"
-              v-model="product.description"
-              :config="editorConfig"
-            ></ckeditor>
+            <ckeditor tag-name="textarea" v-model="product.description" :config="editorConfig"></ckeditor>
           </div>
-          <div class="value" v-else>
+          <div class="value w-[800px]" v-else>
             <span v-html="product.description"></span>
           </div>
         </div>
       </div>
-
       <div class="form-footer">
-        <button class="button button-secondary" @click="$emit('close')">
-          Đóng
-        </button>
-        <button
-          class="button"
-          :class="{ disable: disableButton }"
-          v-if="this.statusData == 0"
-          @click="addItem()"
-          :disabled="disableButton"
-        >
-          Thêm mới
-        </button>
-        <button
-          class="button"
-          :class="{ disable: disableButton }"
-          v-if="this.statusData == 1"
-          @click="updateItem()"
-          :disabled="disableButton"
-        >
-          Cập nhật
-        </button>
+        <button class="button bg-[#FFFFFF] text-[#777E89] border-solid border-[#777E89]"
+          @click="$emit('close')">Đóng</button>
+        <button class="button bg-[#F15B2B]" :class="{ disable: disableButton }" v-if="this.statusData == 0"
+          @click="addItem()" :disabled="disableButton">Lưu</button>
+        <button class="button bg-[#39CB7F]" :class="{ disable: disableButton }" v-if="this.statusData == 1"
+          @click="updateItem()" :disabled="disableButton">Cập nhật</button>
       </div>
     </div>
     <ErrorPopup :title="message" @close="close" v-if="hasError"></ErrorPopup>
@@ -234,14 +160,21 @@ export default {
         return "Sửa " + this.title;
       }
       if (this.statusData == 2) {
-        return "Xem chi tiết " + this.title;
+        return "Chi Tiết " + this.title;
       }
       return "";
     },
   },
   methods: {
+    clickUploadFile() {
+      const input = this.$refs.upload;
+      input?.click();
+    },
+    removeImage() {
+      this.product.image = '';
+    },
     upLoadFile(e) {
-      let endPoint = e[0].name.split(".").pop();
+      let endPoint = e.target.files[0].name.split(".").pop();
       if (
         endPoint != "png" &&
         endPoint != "jpg" &&
@@ -259,9 +192,8 @@ export default {
       this.disableButton = true;
       const url = `https://api.cloudinary.com/v1_1/djgj7gzsw/upload`;
       let reader = new FileReader();
-      reader.onloadend = function () {
-        file = reader.result;
-        console.log(file);
+      reader.onloadend = async () => {
+        file = await reader.result;
         let fileUpload = {
           file: file,
           upload_preset: "vanphongpham",
@@ -276,7 +208,7 @@ export default {
           me.disableButton = false;
         });
       };
-      reader.readAsDataURL(e[0]);
+      reader.readAsDataURL(e.target.files[0]);
     },
     getNewItem() {
       return {
@@ -409,36 +341,41 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .form-content {
   background: #fff;
   border-radius: 8px;
-  max-width: 60%;
-  width: 60%;
   min-width: 800px;
   max-height: 600px;
-  overflow: auto;
+  overflow: hidden;
 }
+
 .form-header {
   height: 40px;
   display: flex;
-  justify-content: space-between;
-  padding: 0 12px;
+  justify-content: center;
+  padding: 32px 0;
   align-items: center;
-  background: #eee;
-  border-radius: 8px 8px 0 0;
 }
+
 .form-title {
-  font-size: 24px;
+  font-style: normal;
   font-weight: 600;
+  font-size: 21px;
+  line-height: 27px;
+  color: #11142D;
 }
+
 .form-action {
   display: flex;
   gap: 12px;
 }
+
 .form-action-icon {
   display: flex;
   gap: 12px;
 }
+
 i {
   height: 36px;
   width: 36px;
@@ -446,67 +383,87 @@ i {
   justify-content: center;
   align-items: center;
 }
+
 i:hover {
   cursor: pointer;
   background: #fff;
 }
+
 .active {
   background: #fff;
 }
+
 .form-body {
   margin: 6px 0;
+  overflow: auto;
+  height: 400px;
+  padding: 0 16px;
 }
+
 .form-body-item {
   padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  column-gap: 24px;
 }
+
 .label {
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 600;
   padding: 6px 0;
 }
+
 .form-body-item .input {
   width: 100%;
 }
+
 .form-footer {
   width: 100%;
-  padding: 12px;
+  padding-bottom: 24px;
+  padding-top: 12px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   justify-items: center;
   gap: 12px;
 }
+
 .file-text {
   color: #045ebe;
   font-size: 20px;
   cursor: pointer;
 }
+
 .image-container {
-  width: 40%;
-  height: 60px;
-  border: 1px solid #045ebe;
+  height: 120px;
+  width: 120px;
+  /* border: 1px solid #045ebe; */
   border-radius: 4px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
+
 .image-container-detail {
-  width: 100%;
-  height: 200px;
+  width: 120px;
+  height: 120px;
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid #045ebe;
+  /* border: 1px solid #777E89; */
   border-radius: 4px;
 }
+
 .image-product {
   max-height: 100%;
   max-width: 100%;
 }
+
 .disable {
   background: #fff;
   color: #bbb;
   border: 1px solid #bbb;
 }
+
 ::-webkit-scrollbar {
   appearance: none;
   width: 10px;
@@ -514,7 +471,13 @@ i:hover {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #045ebe;
+  background: #777E89;
   border-radius: 25px;
+}
+
+.md-field {
+  margin: 0;
+  padding: 0;
+  min-height: 40px;
 }
 </style>

@@ -36,23 +36,34 @@ export default {
 }
 </script>
 <style scoped>
-.navbar{
-    display: flex;
-    flex-direction: column;
-    background-color: #ccc;
-    min-width: 250px;
+.navbar {
+    /* display: flex;
+    flex-direction: column; */
+    background-color: #11142D;
+    /* min-width: 250px;
     max-width: 250px;
     min-height: 700px;
+    height: 100vh; */
+    left: 0px;
+    z-index: 1008;
+    transform: translateX(0%);
+    position: fixed;
+    height: calc((100% - 0px) - 0px);
+    top: 0px;
+    bottom: 0px;
+    width: 256px;
 }
-.logo{
-    height: 100px;
-    width: 250px;
-    border-bottom: 2px solid #eee;
+
+.logo {
+    height: 150px;
+    width: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-left: 1rem;
 }
-.navbar-item{
+
+.navbar-item {
     display: block;
     opacity: 0.8;
     height: 60px;
@@ -60,13 +71,25 @@ export default {
     display: flex;
     gap: 24px;
     align-items: center;
-    border-bottom: 1px solid #eee;
-    transition: all linear 0.5s;
+    padding-left: 1.5rem;
 }
-.navbar-item:hover{
+
+
+.navbar-item span {
+    color: #fff;
+}
+
+.navbar-item:hover {
     opacity: 1;
-    background-color: rgba(41, 139, 245, .5);
+    background-color: #f07a53;
+    text-decoration: none;
     color: #fff;
     cursor: pointer;
 }
-</style>
+
+.navbar-item:focus {
+    opacity: 1;
+    background-color: #F15B2B;
+    color: #fff;
+    cursor: pointer;
+}</style>

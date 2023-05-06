@@ -1,41 +1,43 @@
 <template>
     <div>
         <div class="view">
-            <div class="view-title"
-            data-aos="flip-left"
-            data-aos-duration="1000">
-                Quản lý đơn hàng
+            <div class="view-title" data-aos="flip-left" data-aos-duration="1000">
+                Quản Lý Đơn Hàng
             </div>
             <div class="card">
-                <div class="card-item"
-                data-aos="flip-right"
-                data-aos-easing="ease-out-cubic"
-                data-aos-duration="1200">
-                    <div class="card-item-header"
-                    data-aos="zoom-out-right"
-                        data-aos-duration="1500">
-                        <div class="card-itm-header-title">Tìm kiếm</div>
+                <div class="card-item" data-aos="flip-right" data-aos-easing="ease-out-cubic" data-aos-duration="1200">
+                    <div class="card-item-header">
+                        <div class="card-itm-header-title">Tìm Kiếm</div>
                     </div>
-                    <div class="card-item-content"
-                    data-aos="fade-left"
-                    data-aos-duration="1500">
+                    <div class="card-item-content" data-aos="fade-left" data-aos-duration="1500">
                         <input type="text" class="input" placeholder="" title="Tìm kiếm đơn hàng" v-model="search">
-                        <button class="button" @click="findOrder">Tìm kiếm</button>
-                        <button class="button button-secondary" @click="refresh">Làm mới</button>
+                        <button class="button bg-[#F15B2B]" @click="findOrder">Tìm Kiếm</button>
+                        <button class="button button-secondary" @click="refresh">Làm Mới</button>
                     </div>
                 </div>
             </div>
-        </div>
-        <BaseView :title="header" :items="items" :tableheader="tableHeader" v-if="!noData" :noAdd="true" @add="addItem" @edit="editItem" @detail="detailItem" @delete="deleteItem"></BaseView>
-        <div class="pagination" v-show="!noData">
-            <Pagination ref="pagination" :itemCount="totalItems" :maxDisplayPage="3" :page="page" :perPage="20" @pageChange="pageChange"></Pagination>
+            <div class="bg-[#fff] table my-6" data-aos="flip-right" data-aos-easing="ease-out-cubic"
+                data-aos-duration="1200">
+                <BaseView :title="header" :items="items" :tableheader="tableHeader" v-if="!noData" :noAdd="true"
+                    @add="addItem" @edit="editItem" @detail="detailItem" @delete="deleteItem">
+                </BaseView>
+                <div class="pagination" v-show="!noData">
+                    <div class="text-xs flex text-[#99ABB4]">Total record: <p class="text-xs font-bold pl-1 text-[#11142D]">
+                            {{ totalItems }} records</p>
+                    </div>
+                    <Pagination class="pr-[6rem]" ref="pagination" :itemCount="totalItems" :maxDisplayPage="3" :page="page"
+                        :perPage="20" @pageChange="pageChange"></Pagination>
+                    <div></div>
+                </div>
+            </div>
         </div>
         <div class="nodata" v-if="noData">
             Không có dữ liệu để hiển thị!
         </div>
         <Loader v-if="hasLoader"></Loader>
-        <ErrorPopup @close="close" :title="title"  v-if="hasError"></ErrorPopup>
-        <OrderForm title="đơn hàng" :status="status" :item="item" v-if="showForm" @close="closeForm" @success="success"></OrderForm>
+        <ErrorPopup @close="close" :title="title" v-if="hasError"></ErrorPopup>
+        <OrderForm title="Đơn Hàng" :status="status" :item="item" v-if="showForm" @close="closeForm" @success="success">
+        </OrderForm>
         <ToastMesage :mesage="title" @closeToast="closeToast" v-if="hasToast"></ToastMesage>
         <QuestionPopup :title="title" @close="close" @yes="yes" v-if="hasQuestion"></QuestionPopup>
     </div>
@@ -50,190 +52,208 @@ import OrderForm from '@/view/forms/OrderForm'
 import ToastMesage from '@/components/Bases/ToastMesage'
 import QuestionPopup from '@/components/Bases/BasePopup/QuestionPopup'
 export default {
-    components:{
+    components: {
         BaseView, Pagination, Loader, ErrorPopup, OrderForm, ToastMesage, QuestionPopup
     },
     data() {
         return {
-            tableHeader:[{id:"name",name:"Tên khách hàng"},{id:"order_date",name:"Ngày đặt hàng"},{id:"status",name:"Trạng thái"},{id:"tel",name:"Số điện thoại"}],
-            header:"Danh sách đơn hàng",
-            items:[],
-            page:1,
-            totalItems:0,
-            search:"",
-            hasLoader:false,
-            hasError:false,
+            tableHeader: [{ id: "name", name: "Tên khách hàng" }, { id: "order_date", name: "Ngày đặt hàng" }, { id: "status", name: "Trạng thái" }, { id: "tel", name: "Số điện thoại" }],
+            header: "Danh sách đơn hàng",
+            items: [],
+            page: 1,
+            totalItems: 0,
+            search: "",
+            hasLoader: false,
+            hasError: false,
             title: "",
-            noData:false,
+            noData: false,
             showForm: false,
-            status:0,
-            item:{},
-            hasToast:false,
-            hasQuestion:false
+            status: 0,
+            item: {},
+            hasToast: false,
+            hasQuestion: false
         }
     },
-    created(){
+    created() {
         this.getOrders();
     },
-    methods:{
-        closeToast(){
-            this.hasToast= false
+    methods: {
+        closeToast() {
+            this.hasToast = false
         },
-        success(){
+        success() {
             this.title = "Cập nhật hệ thống thành công."
             this.hasToast = true;
             setTimeout(() => {
                 this.hasToast = false
             }, 3000);
             this.page = 1,
-            this.search=""
+                this.search = ""
             this.getOrders();
         },
-        closeForm(){
-            this.showForm =false
+        closeForm() {
+            this.showForm = false
         },
-        addItem(){
-            this.status=0
-            this.item={};
-            this.showForm=true;
+        addItem() {
+            this.status = 0
+            this.item = {};
+            this.showForm = true;
         },
-        editItem(item){
-            this.status=1
+        editItem(item) {
+            this.status = 1
             this.item = item
-            this.showForm=true;
+            this.showForm = true;
         },
-        detailItem(item){
-            this.status=2
+        detailItem(item) {
+            this.status = 2
             this.item = item
-            this.showForm=true;
+            this.showForm = true;
         },
-        deleteItem(item){
+        deleteItem(item) {
             this.item = item;
             this.title = `Bạn có thật sự muốn xóa danh mục này không.`
             this.hasQuestion = true;
         },
-        yes(){
-            this.$axios.delete(`${api.OrderApi}/${this.item.id}`).then(()=>{
+        yes() {
+            this.$axios.delete(`${api.OrderApi}/${this.item.id}`).then(() => {
                 this.title = "Cập nhật hệ thống thành công."
                 this.hasToast = true;
                 setTimeout(() => {
                     this.hasToast = false
                 }, 3000);
-                this.hasQuestion= false;
+                this.hasQuestion = false;
                 this.page = 1,
-                this.search=""
+                    this.search = ""
                 this.getOrders();
             })
-            .catch(()=>{
-                this.hasQuestion=false
-                this.title = "Có lỗi xảy ra, vui lòng kiểm tra lại."
-                this.hasError = true;
-            })
+                .catch(() => {
+                    this.hasQuestion = false
+                    this.title = "Có lỗi xảy ra, vui lòng kiểm tra lại."
+                    this.hasError = true;
+                })
         },
-        getOrders(){
-            let param={
-                PageNumber:this.page,
+        getOrders() {
+            let param = {
+                PageNumber: this.page,
                 filter: this.search
             }
             this.hasLoader = true
-            this.$axios.get(`${api.OrderApi}/pagination`,{params:param}).then(res=>{
+            this.$axios.get(`${api.OrderApi}/pagination`, { params: param }).then(res => {
                 console.log(res.data.data);
-                this.items=res.data.data;
+                this.items = res.data.data;
                 this.items.forEach(element => {
-                    element.order_date = element.order_date.substring(0,10);
+                    element.order_date = element.order_date.substring(0, 10);
                 });
-                this.totalItems=res.data.totalRecord;
-                if(this.totalItems == 0){
+                this.totalItems = res.data.totalRecord;
+                if (this.totalItems == 0) {
                     this.noData = true;
                 }
-                else{
-                    this.noData=false
+                else {
+                    this.noData = false
                 }
-            }).finally(()=>this.hasLoader=false)
+            }).finally(() => this.hasLoader = false)
         },
-        pageChange(value){
+        pageChange(value) {
             this.page = value;
             this.getOrders();
             window.scrollTo({ top: 0, behavior: "smooth" });
         },
-        async findOrder(){
+        async findOrder() {
             this.$refs.pagination.resetPage();
-            this.page=1
+            this.page = 1
             this.getOrders();
             setTimeout(() => {
-                this.header= `Có ${this.totalItems} kết quả tìm kiếm trùng khớp`
+                this.header = `Có ${this.totalItems} kết quả tìm kiếm trùng khớp`
             }, 100);
         },
-        refresh(){
-            this.header="Danh sách đơn hàng";
-            this.noData =false;
+        refresh() {
+            this.header = "Danh sách đơn hàng";
+            this.noData = false;
             this.$refs.pagination.resetPage();
-            this.page=1
-            this.search="";
+            this.page = 1
+            this.search = "";
             this.getOrders();
         },
 
-        close(){
-            this.hasError=false
-            this.hasQuestion= false
+        close() {
+            this.hasError = false
+            this.hasQuestion = false
         }
     },
 
 }
 </script>
 <style scoped>
-.view{
+.view {
     width: 100%;
-    padding: 12px;
-    overflow: hidden;
+    padding: 0px 32px 24px 32px;
 }
-.card{
+
+.card {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 12px;
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1), 0px 1px 9px rgba(0, 0, 0, 0.06), 0px 3px 5px rgba(0, 0, 0, 0.07);
 }
-.view-title{
+
+.view-title {
+    font-style: normal;
+    font-weight: 700;
     font-size: 30px;
-    font-weight: 600;
-    height: 40px;
-    line-height: 40px;
-    padding: 0 12px;
+    line-height: 39px;
+    color: #11142D;
+    margin: 1rem 0;
 }
-.card-item{
+
+.card-item {
     background-color: #fff;
     border-radius: 8px;
-    padding: 12px;
+    padding: 24px;
     box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1), 0px 1px 9px rgba(0, 0, 0, 0.06),
-    0px 3px 5px rgba(0, 0, 0, 0.07);
+        0px 3px 5px rgba(0, 0, 0, 0.07);
 }
-.card-item-header{
+
+.card-item-header {
     display: flex;
     justify-content: space-between;
-    border-bottom: 2px solid #ccc;
     margin-bottom: 8px;
     padding: 0 0 6px 0;
 }
-.card-itm-header-title{
-    height: 40px;
-    line-height: 40px;
-    font-size: 22px;
-    
+
+.card-itm-header-title {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 21px;
+    line-height: 27px;
+    color: #11142D;
 }
-.card-item-content{
+
+.card-item-content {
     display: flex;
     gap: 12px;
 }
-.card-item-content input{
+
+.card-item-content input {
     width: 400px;
 }
-.pagination{
+
+.table {
+    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1), 0px 1px 9px rgba(0, 0, 0, 0.06),
+        0px 3px 5px rgba(0, 0, 0, 0.07);
+    width: 100%;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 32px;
+}
+
+.pagination {
     width: 100%;
     display: flex;
-    justify-content: center;
-    padding: 24px 0;
+    justify-content: space-between;
 }
-.nodata{
+
+.nodata {
     width: 100%;
     font-size: 32px;
     font-weight: 600;

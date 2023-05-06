@@ -2,14 +2,12 @@
     height: 40px;
     min-width: 200px;
     border: 2px solid #ccc;
-    border-radius: 4px;
+    border-radius: 8px;
     outline: none;
     padding-left: 24px;
     font-size: 16px;
-    transition: all linear .6s;
 }
 
-.input:focus,
-.input:hover {
-    border: 2px solid #045ebe;
+.input:focus {
+    border: 2px solid #F15B2B;
 }

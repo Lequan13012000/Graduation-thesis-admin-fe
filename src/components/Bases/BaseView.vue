@@ -1,39 +1,35 @@
 <template>
-    <div class="view">
-        <div class="card"
-        data-aos="flip-left"
-        data-aos-easing="ease-out-cubic"
-        data-aos-duration="800">
+    <div class="base-view">
+        <div class="card">
             <div class="card-item">
-                <div class="card-item-header"
-                data-aos="fade-right"
-                data-aos-duration="1000">
-                    <div class="card-itm-header-title">{{title}}</div>
-                    <button class="button" @click="$emit('add')" v-if="!noAdd">Tạo mới</button>
+                <div class="card-item-header">
+                    <div class="card-item-header-title">{{ title }}</div>
+                    <button class="button flex items-center gap-x-1" @click="$emit('add')" v-if="!noAdd"><img src="../../assets/icons/add.svg" alt="">Tạo Mới</button>
                 </div>
                 <div class="card-item-content">
                     <table>
                         <thead>
-                            <tr data-aos="fade-right"
-                            data-aos-easing="linear"
-                            data-aos-duration="800">
-                                <th v-for="(item,index) in tableheader" :key="index+item.name">{{item.name}}</th>
+                            <tr>
+                                <th>STT</th>
+                                <th v-for="(item, index) in tableheader" :key="index + item.name">{{ item.name }}</th>
                                 <th>Chức năng</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr v-for="(tr, index) in items" :key="index+tr.name" 
-                            data-aos="fade-left"
-                            data-aos-easing="linear"
-                            data-aos-duration="800">
-                                <td v-for="(td,index) in tableheader" :key="index+td.id">
+                            <tr v-for="(tr, index) in items" :key="index + tr.name">
+                                <td class="text-sm">{{ index + 1 }}</td>
+                                <td v-for="(td, index) in tableheader" :key="index + td.id">
                                     <span v-if="td.id == 'description'" v-html="tr[td.id]"></span>
-                                    <span v-else>{{tr[td.id]}}</span>
+                                    <span v-else>{{ tr[td.id] }}</span>
                                 </td>
-                                <td style="text-align:center; width:200px">
-                                    <button class="button" title="Sửa thông tin"><i class="fa fa-edit" @click="$emit('edit',tr)"></i></button>
-                                    <button class="button" title="Xem chi tiết"><i class="fa fa-eye" @click="$emit('detail',tr)"></i></button>
-                                    <button class="button" title="Xóa bản ghi"><i class="fa fa-trash" @click="$emit('delete',tr)"></i></button>
+                                <td style="text-align:left; width:200px;padding-left: 0;">
+                                    <button class="" title="Sửa thông tin"><i
+                                            class="fa fa-edit text-[#99ABB4] font-normal text-sm"
+                                            @click="$emit('edit', tr)"></i></button>
+                                    <button class="" title="Xem chi tiết"><i class="fa fa-eye text-[#F15B2B] text-sm"
+                                            @click="$emit('detail', tr)"></i></button>
+                                    <button class="" title="Xóa bản ghi"><i class="fa fa-trash text-[#FC4B6C] text-sm"
+                                            @click="$emit('delete', tr)"></i></button>
                                 </td>
                             </tr>
                         </tbody>
@@ -45,83 +41,97 @@
 </template>
 <script>
 export default {
-    props:["title","tableheader","items","noAdd"]
+    props: ["title", "tableheader", "items", "noAdd"]
 }
 </script>
 <style scoped>
-.view{
-    width: 100%;
-    padding: 12px;
+.base-view {
+    /* width: 100%; */
     overflow: hidden;
+    padding-bottom: 24px;
 }
-.card{
+
+.card {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 12px;
 }
-.view-title{
+
+.view-title {
     font-size: 30px;
     font-weight: 600;
     height: 40px;
     line-height: 40px;
     padding: 0 12px;
 }
-.card-item{
-    background-color: #fff;
+
+.card-item {
+    /* background-color: #fff;
     border-radius: 8px;
-    padding: 12px;
-    box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1), 0px 1px 9px rgba(0, 0, 0, 0.06),
-    0px 3px 5px rgba(0, 0, 0, 0.07);
+    padding: 32px; */
 }
-.card-item-header{
+
+.card-item-header {
     display: flex;
     justify-content: space-between;
-    border-bottom: 2px solid #ccc;
     margin-bottom: 8px;
     padding: 0 0 6px 0;
 }
-.card-itm-header-title{
-    height: 40px;
-    line-height: 40px;
-    font-size: 22px;
-    
+
+.card-item-header-title {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 21px;
+    line-height: 27px;
+    color: #11142D;
+
 }
-.card-item-content{
+
+.card-item-content {
     display: flex;
     gap: 12px;
 }
-.card-item-content input{
+
+.card-item-content input {
     width: 400px;
 }
-table{
-    border-collapse: collapse;
-    border: 1px solid #ccc;
+
+table {
     width: 100%;
 }
-table tr{
+
+table tr {
     height: 50px;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ECF0F2;
     transition: all linear .3s;
 }
-table tr:hover{
-   background: #eee; 
+
+table tr:hover {
+    /* background: #eee; */
 }
-table tr:nth-child(2n){
-    background: #eee;
-}
-table th{
+
+table th {
     min-width: 120px;
     padding: 0 12px;
-    border-right: 1px dotted #ccc;
-    
+    text-align: left;
+    color: #99ABB4;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 14px;
 }
-table td{
+
+table td {
     padding: 0 12px;
-    border-right: 1px dotted #ccc;
     width: auto;
 }
-table button{
+
+table td span {
+    font-size: 14px;
+}
+
+
+table button {
     min-width: 40px;
     width: 40px;
     margin: 0 6px;

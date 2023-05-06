@@ -3,18 +3,18 @@
     min-width: 100px;
     border: 1px solid transparent;
     color: #fff;
-    background: #007bff;
+    background: #1A9BFC;
     border-radius: 4px;
-    font-size: 16px;
+    font-size: 14px;
     padding: 0 12px;
     cursor: pointer;
     transition: all linear .5s;
 }
 
 .button:hover {
-    color: #007bff;
+    /* color: #007bff;
     border: 1px solid #007bff;
-    background-color: #fff;
+    background-color: #fff; */
 }
 
 .button-secondary {

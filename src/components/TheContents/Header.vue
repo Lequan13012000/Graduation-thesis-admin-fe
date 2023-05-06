@@ -12,45 +12,54 @@
 </template>
 <script>
 export default {
-    methods:{
-        logout(){
-            this.$store.commit("TOGGLE_ADMIN","")
+    methods: {
+        logout() {
+            this.$store.commit("TOGGLE_ADMIN", "")
         }
     }
 }
 </script>
 <style scoped>
-.header{
+.header {
     height: 40px;
     display: flex;
     justify-content: flex-end;
     gap: 24px;
-    width: 100%;
     padding: 0 48px;
     background: #fff;
+    top: 0px;
+    z-index: 1006;
+    transform: translateY(0%);
+    /* position: fixed; */
+    left: 256px;
+    /* width: calc((100% - 256px) - 0px); */
 }
-.account{
+
+.account {
     display: flex;
     align-items: center;
     gap: 12px;
 }
-.account img{
+
+.account img {
     width: 36px;
     height: 36px;
     border-radius: 100%;
 }
-.signout{
+
+.signout {
     display: flex;
     align-items: center;
     gap: 12px;
     opacity: .8;
     transition: all linear .5s;
 }
-.signout span{
+
+.signout span {
     color: #007bff;
 }
-.signout:hover{
+
+.signout:hover {
     opacity: 1;
     cursor: pointer;
-}
-</style>
+}</style>

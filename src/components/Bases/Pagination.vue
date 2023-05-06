@@ -1,28 +1,17 @@
 <template>
   <ul class="page-list">
-    <li
-      @click="prevPage"
-      :class="['page-item', page == 1 && 'page-item--disabled']"
-    >
-      Trước
+    <li @click="prevPage" :class="['page-item', page == 1 && 'page-item--disabled']">
+      <img src="../../assets/icons/chevron_left.svg" alt="">
     </li>
-    <li
-      :class="[
+    <li :class="[
         'page-item',
         p == page && 'page-item--active',
         p == '...' && 'page-item--dot',
-      ]"
-      v-for="(p, index) in pages"
-      :key="index"
-      @click="setPage(p)"
-    >
+      ]" v-for="(p, index) in pages" :key="index" @click="setPage(p)">
       {{ p }}
     </li>
-    <li
-      @click="nextPage"
-      :class="['page-item', page == pageCount && 'page-item--disabled']"
-    >
-      Sau
+    <li @click="nextPage" :class="['page-item', page == pageCount && 'page-item--disabled']">
+      <img src="../../assets/icons/chevron_right.svg" alt="">
     </li>
   </ul>
 </template>
@@ -40,7 +29,7 @@ export default {
       type: Number,
       default: 3,
     },
-    
+
     // trang hiện tại
     page: {
       type: Number,
@@ -49,7 +38,7 @@ export default {
   },
   emits: ["pageChange"],
   methods: {
-    resetPage(){
+    resetPage() {
       this.setPage(1);
     },
     setPage(p) {
@@ -114,29 +103,40 @@ export default {
 </script>
 <style>
 .page-list {
-    display: flex;
-    align-items: center;
-    list-style: none;
+  display: flex;
+  align-items: center;
+  list-style: none;
 }
 
 .page-item {
-    cursor: pointer;
-    padding: 0 0.5rem;
+  cursor: pointer;
+  padding: 0 0.5rem;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 24px;
+  color: #777E89;
 }
 
 .page-item--active {
-    border: 2px solid #045ebe;
-    pointer-events: none;
-    color: #000;
-    border-radius: 4px;
+  cursor: pointer;
+  color: #F15B2B;
+  border-radius: 50%;
+  background: rgba(241, 91, 43, 0.2);
+  font-weight: 400;
+  font-size: 14px;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
 }
 
 .page-item--dot {
-    pointer-events: none;
+  pointer-events: none;
 }
 
 .page-item--disabled {
-    pointer-events: none;
-    color: #9e9e9e;
+  pointer-events: none;
+  color: #9e9e9e;
+  opacity: 0.5;
 }
 </style>
