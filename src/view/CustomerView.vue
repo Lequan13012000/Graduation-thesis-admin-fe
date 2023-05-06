@@ -19,7 +19,8 @@
             </div>
             <div class="bg-[#fff] table my-6" data-aos="flip-right" data-aos-easing="ease-out-cubic"
                 data-aos-duration="1200">
-                <BaseView :title="header" :items="items" :tableheader="tableHeader" v-if="!noData" @add="addItem"
+                <BaseView :page="page"
+                 :title="header" :items="items" :tableheader="tableHeader" v-if="!noData" @add="addItem"
                     @edit="editItem" @detail="detailItem" @delete="deleteItem"></BaseView>
                 <div class="pagination" v-show="!noData">
                     <div class="text-xs flex text-[#99ABB4]">Total record: <p class="text-xs font-bold pl-1 text-[#11142D]">
@@ -82,7 +83,7 @@ export default {
             this.hasToast = false
         },
         success() {
-            this.title = "Cập nhật hệ thống thành công."
+            this.title = "Cập nhật thành công."
             this.hasToast = true;
             setTimeout(() => {
                 this.hasToast = false
@@ -111,12 +112,12 @@ export default {
         },
         deleteItem(item) {
             this.item = item;
-            this.title = `Bạn có thật sự muốn xóa khách hàng này không.`
+            this.title = `Bạn có thật sự muốn xóa khách hàng này không?`
             this.hasQuestion = true;
         },
         yes() {
             this.$axios.delete(`${api.CustomerApi}/${this.item.id}`).then(() => {
-                this.title = "Cập nhật hệ thống thành công."
+                this.title = "Xóa thành công."
                 this.hasToast = true;
                 setTimeout(() => {
                     this.hasToast = false

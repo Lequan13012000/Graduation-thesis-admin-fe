@@ -4,23 +4,24 @@
             <img src="../../assets/image/logo.png" alt="">
         </div>
         <div class="navbar-items">
-            <router-link to="/dashboarch" class="navbar-item">
+            <!-- <div class="text-[#FFFFFF] pl-3">Quản lý</div> -->
+            <router-link to="/dashboarch" class="navbar-item" :class="{ 'navbar-active': getPath == 'dashboarch' }">
                 <i class="fas fa-chart-line"></i>
                 <span>Trang chủ</span>
             </router-link>
-            <router-link to="/category" class="navbar-item">
+            <router-link to="/category" class="navbar-item" :class="{ 'navbar-active': getPath == 'category' }">
                 <i class="fas fa-grip-lines"></i>
                 <span>Danh mục</span>
             </router-link>
-            <router-link to="/product" class="navbar-item">
+            <router-link to="/product" class="navbar-item" :class="{ 'navbar-active': getPath == 'product' }">
                 <i class="fas fa-store"></i>
                 <span>Hàng hóa</span>
             </router-link>
-            <router-link to="/customer" class="navbar-item">
+            <router-link to="/customer" class="navbar-item" :class="{ 'navbar-active': getPath == 'customer' }">
                 <i class="fas fa-users"></i>
                 <span>Khách hàng</span>
             </router-link>
-            <router-link to="/order" class="navbar-item">
+            <router-link to="/order" class="navbar-item" :class="{ 'navbar-active': getPath == 'order' }">
                 <i class="fas fa-shopping-cart"></i>
                 <span>Đơn hàng</span>
             </router-link>
@@ -33,17 +34,16 @@ export default {
         return {
         }
     },
+    computed: {
+        getPath() {
+            return this.$route.path.replace(/\//g, "");
+        },
+    },
 }
 </script>
 <style scoped>
 .navbar {
-    /* display: flex;
-    flex-direction: column; */
     background-color: #11142D;
-    /* min-width: 250px;
-    max-width: 250px;
-    min-height: 700px;
-    height: 100vh; */
     left: 0px;
     z-index: 1008;
     transform: translateX(0%);
@@ -66,30 +66,31 @@ export default {
 .navbar-item {
     display: block;
     opacity: 0.8;
-    height: 60px;
+    height: 48px;
     padding: 4px 12px;
     display: flex;
     gap: 24px;
     align-items: center;
     padding-left: 1.5rem;
+    margin: 0 16px;
+    border-radius: 8px;
 }
 
 
 .navbar-item span {
     color: #fff;
+    font-size: 14px;
 }
 
 .navbar-item:hover {
-    opacity: 1;
-    background-color: #f07a53;
     text-decoration: none;
-    color: #fff;
-    cursor: pointer;
+    background-color: #64463d;
 }
 
-.navbar-item:focus {
+.navbar-active {
     opacity: 1;
     background-color: #F15B2B;
     color: #fff;
     cursor: pointer;
-}</style>
+}
+</style>

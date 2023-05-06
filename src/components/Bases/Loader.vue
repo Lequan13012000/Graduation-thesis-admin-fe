@@ -1,6 +1,6 @@
 <template>
-     <div class="m-loader">
-        <div class="loader"></div>
+    <div class="m-loader">
+        <span class="loader"></span>
     </div>
 </template>
 <script>
@@ -8,33 +8,31 @@ export default {
 }
 </script>
 <style scoped>
-
-/*thiết lập vị trí của loader*/
 .m-loader {
     position: fixed;
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.2);
+    /* background-color: rgba(0, 0, 0, 0.2); */
 }
 
-
-/* thiết lập loader*/
 .loader {
     position: absolute;
-    background: url('../../assets/loading.svg') no-repeat;
+    top: 50%;
+    right: 45%;
+    border: 5px solid #39CB7F;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
     width: 32px;
     height: 32px;
-    top: 50%;
-    right: 50%;
-    transform: translate(50% 50%);
-    animation: spin 1.5s linear infinite;
-} 
+}
 
-
-/* thiết lập quay của loader*/
-@keyframes spin {
+@keyframes rotation {
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }

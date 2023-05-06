@@ -18,7 +18,7 @@
             </div>
             <div class="bg-[#fff] table my-6" data-aos="flip-right" data-aos-easing="ease-out-cubic"
                 data-aos-duration="1200">
-                <BaseView :title="header" :items="items" :tableheader="tableHeader" v-if="!noData" :noAdd="true"
+                <BaseView :page="page" :title="header" :items="items" :tableheader="tableHeader" v-if="!noData" :noAdd="true"
                     @add="addItem" @edit="editItem" @detail="detailItem" @delete="deleteItem">
                 </BaseView>
                 <div class="pagination" v-show="!noData">
@@ -82,7 +82,7 @@ export default {
             this.hasToast = false
         },
         success() {
-            this.title = "Cập nhật hệ thống thành công."
+            this.title = "Cập nhật thành công."
             this.hasToast = true;
             setTimeout(() => {
                 this.hasToast = false
@@ -116,7 +116,7 @@ export default {
         },
         yes() {
             this.$axios.delete(`${api.OrderApi}/${this.item.id}`).then(() => {
-                this.title = "Cập nhật hệ thống thành công."
+                this.title = "Xóa thành công."
                 this.hasToast = true;
                 setTimeout(() => {
                     this.hasToast = false

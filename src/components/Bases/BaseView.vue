@@ -4,7 +4,8 @@
             <div class="card-item">
                 <div class="card-item-header">
                     <div class="card-item-header-title">{{ title }}</div>
-                    <button class="button flex items-center gap-x-1" @click="$emit('add')" v-if="!noAdd"><img src="../../assets/icons/add.svg" alt="">Tạo Mới</button>
+                    <button class="button flex items-center gap-x-1" @click="$emit('add')" v-if="!noAdd"><img
+                            src="../../assets/icons/add.svg" alt="">Tạo Mới</button>
                 </div>
                 <div class="card-item-content">
                     <table>
@@ -17,7 +18,7 @@
                         </thead>
                         <tbody>
                             <tr v-for="(tr, index) in items" :key="index + tr.name">
-                                <td class="text-sm">{{ index + 1 }}</td>
+                                <td class="text-sm">{{ index + (page - 1) * 10 + 1 }}</td>
                                 <td v-for="(td, index) in tableheader" :key="index + td.id">
                                     <span v-if="td.id == 'description'" v-html="tr[td.id]"></span>
                                     <span v-else>{{ tr[td.id] }}</span>
@@ -41,7 +42,7 @@
 </template>
 <script>
 export default {
-    props: ["title", "tableheader", "items", "noAdd"]
+    props: ["title", "tableheader", "items", "noAdd", "page"]
 }
 </script>
 <style scoped>

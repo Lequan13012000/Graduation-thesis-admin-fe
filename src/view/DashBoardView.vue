@@ -82,7 +82,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-item">
+                <div class="card-item mb-8">
                     <div class="card-item-header" data-aos="fade-right" data-aos-duration="1500">
                         <div class="card-itm-header-title">Biểu đồ thống kê chi tiết</div>
                         <div class="time-button">
@@ -90,7 +90,7 @@
                             <button class="button" @click="renderYearReport()">Báo cáo theo năm</button>
                         </div>
                     </div>
-                    <div class="card-item-content">
+                    <div class="card-item-content px-4">
                         <div class="time-filter" data-aos="fade-left" data-aos-duration="1500">
                             <div class="time">
                                 {{ mainTitle }}
@@ -158,12 +158,12 @@ export default {
                 labels: [],
                 datasets: [{
                     label: 'Số đơn hàng',
-                    backgroundColor: ['#3cba9f'],
+                    backgroundColor: ['#fb9678'],
                     data: [63.2, 52.1, 73.4, 78.4, 80.5, 79.2, 82.1]
                 },
                 {
                     label: 'Giá trị (Triệu VND)',
-                    backgroundColor: ['#8e5ea2'],
+                    backgroundColor: ['#03c9d7'],
                     data: [63.2, 52.1, 73.4, 78.4, 80.5, 79.2, 82.1]
                 }
                 ]
@@ -267,7 +267,7 @@ export default {
 <style scoped>
 .view {
     width: 100%;
-    padding: 12px;
+    padding: 24px;
     overflow: hidden;
 }
 
@@ -283,7 +283,8 @@ export default {
     font-weight: 600;
     height: 40px;
     line-height: 40px;
-    padding: 0 12px;
+    padding: 0px 12px;
+    margin-bottom: 8px;
 }
 
 .card-item {
@@ -297,16 +298,16 @@ export default {
 .card-item-header {
     display: flex;
     justify-content: space-between;
-    border-bottom: 2px solid #ccc;
     margin-bottom: 8px;
-    padding: 0 0 6px 0;
+    padding: 0 16px 6px 0;
 }
 
 .card-itm-header-title {
-    height: 40px;
-    line-height: 40px;
-    font-size: 22px;
-
+    height: 32px;
+    font-size: 21px;
+    padding: 0 16px;
+    display: flex;
+    align-items: center;
 }
 
 .card-item-content {
@@ -321,16 +322,19 @@ export default {
     justify-content: center;
     align-items: center;
     gap: 12px;
+    padding: 0 16px 16px 16px;
 }
 
 .report {
     flex-basis: 25%;
     min-height: 150px;
+    height: 160px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
     border-radius: 8px;
+    padding: 16px 0px;
 }
 
 .report-1 {
@@ -386,9 +390,7 @@ export default {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    padding-right: 5%;
-    /* color: #045ebe; */
-    font-size: 24px;
+    font-size: 16px;
 }
 
 .time-container {
