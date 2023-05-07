@@ -3,19 +3,17 @@
         <div class="login-form">
             <div class="login-form-container">
                 <div class="login-content--item" style="display:flex; justify-content:center">
-                    <div class="login-header">Đăng nhập quản trị viên</div>
+                    <div class="login-header">Trang quản trị viên</div>
                 </div>
-                <div class="login-content--item">
-                <i class="fas fa-user"></i>
+                <div class="login-content--item" style="align-items: start">
                 <span>Tên đăng nhập:</span>
                 <input type="text" class="input" placeholder="Tên đăng nhập..." v-model="admin.username">
                 </div>
-                <div class="login-content--item">
-                    <i class="fas fa-key"></i>
+                <div class="login-content--item" style="align-items: start">
                     <span>Mật khẩu:</span>
                     <input type="password" class="input" placeholder="Mật khẩu..." v-model="admin.password">
                 </div>
-                <div class="login-content--item" style="display:flex; justify-content:center">
+                <div class="login-content--item py-3" style="display:flex; justify-content:center">
                 <button class="button" @click="login()">Đăng Nhập</button>
                 </div>
             </div>
@@ -85,9 +83,9 @@ export default {
     align-items: center;
 }
 .login-form{
-    width: 50%;
-    height: 50%;
-    min-width: 500px;
+    width: 40%;
+    height: 35%;
+    min-width: 300px;
     min-height: 200px;
     background: rgb(176,255,251);
     background: linear-gradient(90deg, rgba(176,255,251,0.8) 0%, rgba(144,144,238,0.8) 80%, rgba(8,59,244,0.8) 100%);
@@ -100,18 +98,19 @@ export default {
 }
 .login-form-container{
     width: 100%;
-    padding: 24px;
+    padding: 32px;
 }
 .login-content--item{
     display: flex;
     align-items: center;
     margin: 12px 0;
+    flex-direction: column;
 }
 .login-header{
     height: 60px;
     line-height: 60px;
     font-size: 32px;
-    color: rgb(59, 8, 226);
+    color: #68707c;
     font-weight: 600;
     background: -webkit-linear-gradient(45deg,rgb(47, 3, 192), rgb(26, 74, 249));
     -webkit-background-clip: text;
@@ -128,6 +127,7 @@ export default {
 .login-content--item span{
     min-width: 150px;
     padding: 0 12px;
+    margin-bottom: 8px;
 }
 .login-content--item input{
     width: 100%;
@@ -136,6 +136,6 @@ export default {
     transition: all linear .6s;;
 }
 .login-content--item input:focus,input:hover{
-    border: 2px solid #045ebe;
+    border: 2px solid #68707c;
 }
 </style>

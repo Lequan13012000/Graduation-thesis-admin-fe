@@ -6,23 +6,23 @@
         <div class="navbar-items">
             <!-- <div class="text-[#FFFFFF] pl-3">Quản lý</div> -->
             <router-link to="/dashboarch" class="navbar-item" :class="{ 'navbar-active': getPath == 'dashboarch' }">
-                <i class="fas fa-chart-line"></i>
+                <i class="fas fa-chart-line icon"></i>
                 <span>Trang chủ</span>
             </router-link>
             <router-link to="/category" class="navbar-item" :class="{ 'navbar-active': getPath == 'category' }">
-                <i class="fas fa-grip-lines"></i>
+                <i class="fas fa-grip-lines icon"></i>
                 <span>Danh mục</span>
             </router-link>
             <router-link to="/product" class="navbar-item" :class="{ 'navbar-active': getPath == 'product' }">
-                <i class="fas fa-store"></i>
+                <i class="fas fa-store icon"></i>
                 <span>Hàng hóa</span>
             </router-link>
             <router-link to="/customer" class="navbar-item" :class="{ 'navbar-active': getPath == 'customer' }">
-                <i class="fas fa-users"></i>
+                <i class="fas fa-users icon"></i>
                 <span>Khách hàng</span>
             </router-link>
             <router-link to="/order" class="navbar-item" :class="{ 'navbar-active': getPath == 'order' }">
-                <i class="fas fa-shopping-cart"></i>
+                <i class="fas fa-shopping-cart icon"></i>
                 <span>Đơn hàng</span>
             </router-link>
         </div>
@@ -52,6 +52,10 @@ export default {
     top: 0px;
     bottom: 0px;
     width: 256px;
+}
+.icon{
+    width: 22px;
+    height: 18px;
 }
 
 .logo {
