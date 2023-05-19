@@ -19,8 +19,12 @@
             </div>
             <div class="bg-[#fff] table my-6" data-aos="flip-right" data-aos-easing="ease-out-cubic"
                 data-aos-duration="1200">
-                <BaseView :page="page" :title="header" :items="items" :tableheader="tableHeader" v-if="!noData" @add="addItem"
-                    @edit="editItem" @detail="detailItem" @delete="deleteItem"></BaseView>
+                <BaseView :page="page" :title="header" :items="items" :tableheader="tableHeader" v-if="!noData"
+                    @add="addItem" @edit="editItem" @detail="detailItem" @delete="deleteItem"></BaseView>
+                <div class="nodata" v-if="noData">
+                    <img src="../assets/image/empty.svg" alt="No image">
+                    Không có dữ liệu để hiển thị.
+                </div>
                 <div class="pagination" v-show="!noData">
                     <div class="text-xs flex text-[#99ABB4]">Total record: <p class="text-xs font-bold pl-1 text-[#11142D]">
                             {{ totalItems }} records</p>
@@ -30,10 +34,6 @@
                     <div></div>
                 </div>
             </div>
-        </div>
-
-        <div class="nodata" v-if="noData">
-            Không có dữ liệu để hiển thị!
         </div>
         <Loader v-if="hasLoader"></Loader>
         <ErrorPopup @close="close" :title="title" v-if="hasError"></ErrorPopup>
@@ -253,11 +253,17 @@ export default {
 }
 
 .nodata {
-    width: 100%;
-    font-size: 32px;
-    font-weight: 600;
-    color: red;
     display: flex;
+    align-items: center;
+    flex-direction: column;
     justify-content: center;
+    font-size: 16px;
+    text-align: center;
+    color: #a11f2c;
+}
+
+.nodata img {
+    width: 260px;
+    height: 260px;
 }
 </style>

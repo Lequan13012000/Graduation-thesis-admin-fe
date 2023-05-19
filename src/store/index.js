@@ -14,7 +14,11 @@ const storeData = {
     mutations: {
         TOGGLE_ADMIN(state, admin) {
             state.admin = admin;
+            localStorage.setItem("admin", JSON.stringify(admin));
         },
+        SAVE_ADMIN(state) {
+            state.admin = JSON.parse(localStorage.getItem("admin"));
+          },
         TOGGLE_LOGOUT(state) {
             state.isLogOut = !state.isLogOut
         }

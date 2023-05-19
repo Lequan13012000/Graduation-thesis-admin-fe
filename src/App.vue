@@ -18,6 +18,9 @@ export default {
     Content,
     Login
   },
+  created() {
+    this.$store.commit("SAVE_ADMIN");
+  },
   data() {
     return {
       hasUser:false,
