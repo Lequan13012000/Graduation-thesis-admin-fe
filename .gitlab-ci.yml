@@ -1,0 +1,14 @@
+image: docker
+services:
+  - docker:dind
+stages:
+  - deploy
+step-deploy-prod:
+  stage: deploy
+  tags:
+    - node_js
+  script:
+    - docker build -t app/admin-vpp .
+    - docker rm -f quanlda-admin
+    - docker run -d --name quanlda-admin -p 1006:80 -it app/admin-vpp
+#
